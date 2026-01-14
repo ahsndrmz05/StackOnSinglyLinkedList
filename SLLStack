@@ -1,0 +1,77 @@
+//Node class
+class Node<E> {
+ E data;
+ Node<E> next;
+ public Node(E data) {
+     this.data = data;
+     this.next = null;}
+}
+//Singly Linked List class
+class SinglyLinkedList<E> {
+ Node<E> head;
+ public SinglyLinkedList() {
+     head = null;}
+}
+//Stack implemented using Singly Linked List
+public class SLLStack<E> {
+ SinglyLinkedList<E> list;
+ public SLLStack() {
+     list = new SinglyLinkedList<>();
+ }
+ // b. push operation
+ // Big-O: O(n) because we must traverse to the end of the list.
+ public Node<E> push(E addedValue) {
+     Node<E> newNode = new Node<>(addedValue);
+     if (list.head == null) {
+         list.head = newNode;
+         return list.head;}
+
+     Node<E> temp = list.head;
+     while (temp.next != null) {
+         temp = temp.next;}
+
+     temp.next = newNode;
+     return list.head;
+ }
+ // e. pop operation
+ // Big-O: O(n) because we must traverse to the second-last node.
+ public E pop() {
+     if (list.head == null)
+         return null;
+
+     if (list.head.next == null) {
+         E value = list.head.data;
+         list.head = null;
+         return value;}
+
+     Node<E> temp = list.head;
+     while (temp.next.next != null) {
+         temp = temp.next;}
+
+     E value = temp.next.data;
+     temp.next = null;
+     return value;
+ }
+ // d & g. TEST CASES
+ public static void main(String[] args) {
+     SLLStack<String> stack = new SLLStack<>();
+
+     System.out.println("Pushing A, B, C, D...");
+     stack.push("A");
+     stack.push("B");
+     stack.push("C");
+     stack.push("D");
+
+     System.out.println("Pushed successfully.");
+
+     System.out.println("\nPopping top element: " + stack.pop());
+     System.out.println("Popping top element: " + stack.pop());
+
+     System.out.println("\nStack after popping two items:");
+     Node<String> temp = stack.list.head;
+     while (temp != null) {
+         System.out.print(temp.data + " -> ");
+         temp = temp.next;}
+     System.out.println("null");
+ }
+}
